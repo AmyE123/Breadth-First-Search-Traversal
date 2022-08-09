@@ -27,4 +27,6 @@ public:
 
 	void addEdge(int fromNode, int toNode);
 	void BFS(Graph g, int root, int dest);
+	void Dijkstras_Algorithm(int graph[6][6]);
+	void Dijkstras_Algorithm_SP(int graph[6][6], int start, int end);
 };

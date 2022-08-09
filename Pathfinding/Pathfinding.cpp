@@ -5,11 +5,115 @@
 #include <iostream>
 #include "Pathfinding.h"
 
+#define INT_MAX 1000	//just a max cap
+
 // Connects our graph nodes.
 void Graph::addEdge(int fromNode, int toNode)
 {
 	adjacencyList[fromNode].push_back(toNode);
 	adjacencyList[toNode].push_back(fromNode);
+}
+
+int selectMinVertex(vector<int>& value, vector<bool>& processed)
+{
+	int minimum = INT_MAX;
+	int vertex;
+	for (int i = 0; i < 6; ++i)
+	{
+		if (processed[i] == false && value[i] < minimum)
+		{
+			vertex = i;
+			minimum = value[i];
+		}
+	}
+	return vertex;
+}
+
+int selectMinVertex2(vector<int>& value, vector<bool>& processed, int start, int end)
+{
+	int minimum = INT_MAX;
+	int vertex;
+	for (int i = 0; i < end; ++i)
+	{
+		if (processed[i] == false && value[i] < minimum)
+		{
+			vertex = i;
+			minimum = value[i];
+		}
+	}
+	return vertex;
+}
+
+
+// Performs Dijkstra's algorithm on our graph
+void Dijkstras_Algorithm(int graph[6][6])
+{
+	int parent[6];	//stores the shortest path
+	vector<int> value(6, INT_MAX);
+	vector<bool> processed(6, false);	//if true, the vertex has been processed
+
+	parent[0] = -1;	//start node has no parent
+	value[0] = 0;
+
+	for (int i = 0; i < 6 - 1; ++i)
+	{
+		int U = selectMinVertex(value, processed);
+		processed[U] = true;
+
+		for (int j = 0; j < 6; j++)
+		{
+			if (graph[U][j] != 0 && processed[j] == false && value[U] != INT_MAX && (value[U] + graph[U][j] < value[j]))
+			{
+				value[j] = value[U] + graph[U][j];
+				parent[j] = U;
+			}
+		}
+	}
+	for (int i = 1; i < 6; ++i)
+	{
+		cout << "U -> V // " << parent[i] << " (TOP) -> " << i << " (SIDE) // weight = " << graph[parent[i]][i] << "\n";
+	}
+}
+
+// Performs Dijkstra's algorithm on our graph & gives shortest path
+void Dijkstras_Algorithm_SP(int graph[6][6], int start, int end)
+{
+	int parent[6];	//stores the shortest path
+	int parent2[6];
+	vector<int> value(6, INT_MAX);
+	vector<bool> processed(6, false);	//if true, the vertex has been processed
+
+	parent[0] = -1;	//start node has no parent
+	value[0] = 0;
+
+	for (int i = 0; i < 6 - 1; ++i)
+	{
+		int U = selectMinVertex(value, processed);
+		processed[U] = true;
+
+		for (int j = 0; j < 6; j++)
+		{
+			if (graph[U][j] != 0 && processed[j] == false && value[U] != INT_MAX && (value[U] + graph[U][j] < value[j]))
+			{
+				value[j] = value[U] + graph[U][j];
+				parent[j] = U;
+			}
+		}
+	}
+	for (int i = 1; i < 6; ++i)
+	{
+		//cout << "U -> V // " << parent[i] << " (TOP) -> " << i << " (SIDE) // weight = " << graph[parent[i]][i] << "\n";
+		if (parent[i] == start || end)
+		{
+			parent2[i] = parent[i];
+		}
+	}
+
+	for (int i = 1; i < end; ++i)
+	{
+		cout << start << " to " << end << " would be " << "\n";
+		cout << "U -> V // " << parent2[i] << " (TOP) -> " << i << " (SIDE) // weight = " << graph[parent2[i]][i] << "\n";
+	}
 }
 
 // Performs a Breadth First Search Traversal on our graph.
@@ -22,7 +126,7 @@ void Graph::BFS(Graph g, int root, int dest)
 
 	// Checking if our inputted values are valid.
 	if (root >= 27 || dest >= 27 || root < 0 || dest < 0)
-	{
+ 	{
 		cout << "Invalid path." << endl;
 		return;
 	}
@@ -96,7 +200,14 @@ void adjacentListGraph(Graph g)
 
 int main()
 {
-	Graph g(textLineCount());
+	//adjacency matrix definition
+	int graphMatrix[6][6] = { {0, 5, 1, 2, 0, 0}, {5, 0, 3, 0, 2, 0}, {1, 3, 0, 4, 0, 0}, {2, 0, 4, 0, 6, 5}, {0, 2, 0, 6, 0, 7}, {0, 0, 0, 5, 7, 0} };
+
+	//Dijkstras_Algorithm(graphMatrix);
+	Dijkstras_Algorithm_SP(graphMatrix, 2, 5);
+	return 0;
+	
+	/*Graph g(textLineCount());
 
 	adjacentListGraph(g);
 
@@ -109,5 +220,5 @@ int main()
 	cout << "Enter a destination point: ";
 	cin >> destinationPoint;
 
-	g.BFS(g, rootPoint, destinationPoint);
+	g.BFS(g, rootPoint, destinationPoint);*/
 }
