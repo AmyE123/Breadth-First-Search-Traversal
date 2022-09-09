@@ -96,22 +96,22 @@ void Dijkstras_Algorithm_SP(int graph[6][6], int start, int end)
 			{
 				value[j] = value[U] + graph[U][j];
 				parent[j] = U;
+				cout << parent[j] + 1 << " to " << j + 1 << " weight = " << graph[parent[j]][j] << "\n";
 			}
 		}
 	}
 	for (int i = 1; i < 6; ++i)
 	{
-		//cout << "U -> V // " << parent[i] << " (TOP) -> " << i << " (SIDE) // weight = " << graph[parent[i]][i] << "\n";
 		if (parent[i] == start || end)
 		{
 			parent2[i] = parent[i];
 		}
 	}
 
-	for (int i = 1; i < end; ++i)
+	for (int i = 1; i < end + 1; ++i)
 	{
-		cout << start << " to " << end << " would be " << "\n";
-		cout << "U -> V // " << parent2[i] << " (TOP) -> " << i << " (SIDE) // weight = " << graph[parent2[i]][i] << "\n";
+		//cout << "U -> V // " << parent2[i] + 1 << " (TOP) -> " << i + 1 << " (SIDE) // weight = " << graph[parent2[i]][i] << "\n";
+		cout << parent2[i] + 1 << " to " << i + 1 << " weight = " << graph[parent[i]][i] << "\n";
 	}
 }
 
@@ -205,22 +205,42 @@ int main()
 	//adjacency matrix definition
 	int graphMatrix[6][6] = { {0, 5, 1, 2, 0, 0}, {5, 0, 3, 0, 2, 0}, {1, 3, 0, 4, 0, 0}, {2, 0, 4, 0, 6, 5}, {0, 2, 0, 6, 0, 7}, {0, 0, 0, 5, 7, 0} };
 
-	//Dijkstras_Algorithm(graphMatrix);
-	Dijkstras_Algorithm_SP(graphMatrix, 2, 5);
-	return 0;
-	
-	/*Graph g(textLineCount());
+	int x;
 
-	adjacentListGraph(g);
+	cout << "Select 0 for Dijkstra's Algorithm, or 1 for Breadth First Search" << "\n";
+	cin >> x;
 
-	int rootPoint;
-	int destinationPoint;
+	if (x == 0)
+	{
+		int rootPoint;
+		int destinationPoint;
 
-	cout << "Enter a root point: ";
-	cin >> rootPoint;
+		cout << "Enter a root point: ";
+		cin >> rootPoint;
 
-	cout << "Enter a destination point: ";
-	cin >> destinationPoint;
+		cout << "Enter a destination point: ";
+		cin >> destinationPoint;
 
-	g.BFS(g, rootPoint, destinationPoint);*/
+		//Dijkstras_Algorithm(graphMatrix);
+		Dijkstras_Algorithm_SP(graphMatrix, rootPoint, destinationPoint);
+		return 0;
+	}
+	else
+	{
+		Graph g(textLineCount());
+
+		adjacentListGraph(g);
+
+		int rootPoint;
+		int destinationPoint;
+
+		cout << "Enter a root point: ";
+		cin >> rootPoint;
+
+		cout << "Enter a destination point: ";
+		cin >> destinationPoint;
+
+		g.BFS(g, rootPoint, destinationPoint);
+	}
+
 }
