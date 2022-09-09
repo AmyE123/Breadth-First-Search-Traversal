@@ -1,7 +1,3 @@
-// ============================================================
-// Amy Elliott's TOGA C++ Submission - BFS & Graph Theory Study
-// ============================================================
-
 #include <iostream>
 #include <list>
 #include <queue>
