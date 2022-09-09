@@ -1,9 +1,8 @@
-// ============================================================
-// Amy Elliott's TOGA C++ Submission - BFS & Graph Theory Study
-// ============================================================
-
 #include <iostream>
 #include "Pathfinding.h"
+
+//TODO: Refine comments, and remove unneeded comments
+//TODO: Change all variable and function names to fit C++ code conventions and/or make them easier to understand
 
 #define INT_MAX 1000	//just a max cap
 
@@ -200,6 +199,9 @@ void adjacentListGraph(Graph g)
 
 int main()
 {
+	//TODO: Clean up user interface
+	//TODO: Allow user to pick method
+
 	//adjacency matrix definition
 	int graphMatrix[6][6] = { {0, 5, 1, 2, 0, 0}, {5, 0, 3, 0, 2, 0}, {1, 3, 0, 4, 0, 0}, {2, 0, 4, 0, 6, 5}, {0, 2, 0, 6, 0, 7}, {0, 0, 0, 5, 7, 0} };
 
